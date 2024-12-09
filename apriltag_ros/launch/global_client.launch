@@ -1,0 +1,41 @@
+<launch>
+
+  <arg name="launch_prefix" default="" /> <!--set to value="gdbserver localhost:10000" for remote debugging-->
+  <arg name="node_namespace" default="gulliview_noetic_tagfloor_client_node" />
+  <arg name="image_base_path" default="/home/yuchuandong/ros_ws/src/gulliview_noetic/apriltag_ros/config/data/" /> <!-- Where to load image for analysis from -->
+  
+
+
+  <!-- Set parameters -->
+  <rosparam command="load" file="$(find apriltag_ros)/config/global_tag_settings.yaml" ns="$(arg node_namespace)" />
+  <rosparam command="load" file="$(find apriltag_ros)/config/global_tags.yaml" ns="$(arg node_namespace)" />
+
+  <node pkg="apriltag_ros" type="gulliview_noetic_tagfloor_client_node" name="$(arg node_namespace)" clear_params="true" output="screen" launch-prefix="$(arg launch_prefix)" >
+
+    <param name="image_base_path" type="str" value="$(arg image_base_path)" />
+
+
+    <!-- Camera intrinsic parameters -->
+    <param name="cam0_fx" type="double" value="1145.256303" />
+    <param name="cam0_fy" type="double" value="1141.658316" />
+    <param name="cam0_cx" type="double" value="961.614618" />
+    <param name="cam0_cy" type="double" value="514.490771" />
+    
+    <param name="cam1_fx" type="double" value="1098.753775" />
+    <param name="cam1_fy" type="double" value="1098.516584" />
+    <param name="cam1_cx" type="double" value="946.799083" />
+    <param name="cam1_cy" type="double" value="514.682774" />
+
+    <param name="cam2_fx" type="double" value="1146.495853" />
+    <param name="cam2_fy" type="double" value="1146.011083" />
+    <param name="cam2_cx" type="double" value="953.976032" />
+    <param name="cam2_cy" type="double" value="571.868765" />
+
+    <param name="cam3_fx" type="double" value="1135.208474" />
+    <param name="cam3_fy" type="double" value="1133.531325" />
+    <param name="cam3_cx" type="double" value="998.932805" />
+    <param name="cam3_cy" type="double" value="530.084624" />
+
+  </node>
+
+</launch>

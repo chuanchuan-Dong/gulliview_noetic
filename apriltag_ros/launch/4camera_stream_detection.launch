@@ -1,0 +1,90 @@
+<launch>
+  <!-- set to value="gdbserver localhost:10000" for remote debugging -->
+  <arg name="launch_prefix" default="" />
+
+  <!-- Configure camera indices -->
+  <arg name="camera_index_1" default="0" />
+  <arg name="camera_index_2" default="1" />
+  <arg name="camera_index_3" default="2" />
+  <arg name="camera_index_4" default="3" />
+
+  <!-- Configure the image topic name -->
+  <arg name="image_topic" default="image_raw" />
+  <arg name="queue_size" default="1" />
+
+  <!-- Node for Camera 1 -->
+  <node pkg="apriltag_ros" type="gulliview_noetic_stream_cameraX_node"
+    name="Stream_Camera1_detector"
+    clear_params="true" output="screen" launch-prefix="$(arg launch_prefix)">
+    <!-- Remap topics from those used in code to those on the ROS network -->
+    <remap from="image_rect" to="/camera$(arg camera_index_1)/$(arg image_topic)" />
+
+    <param name="camera_index" type="int" value="$(arg camera_index_1)"/>
+    <param name="queue_size" type="int" value="$(arg queue_size)" />
+
+    <param name="cam0_fx" type="double" value="1145.256303" />
+    <param name="cam0_fy" type="double" value="1141.658316" />
+    <param name="cam0_cx" type="double" value="961.614618" />
+    <param name="cam0_cy" type="double" value="514.490771" />
+  
+    <rosparam command="load" file="$(find apriltag_ros)/config/object_setting.yaml" />
+    <rosparam command="load" file="$(find apriltag_ros)/config/object.yaml" />
+  </node>
+
+  <!-- Node for Camera 2 -->
+  <node pkg="apriltag_ros" type="gulliview_noetic_stream_cameraX_node"
+    name="Stream_Camera2_detector"
+    clear_params="true" output="screen" launch-prefix="$(arg launch_prefix)">
+    <!-- Remap topics from those used in code to those on the ROS network -->
+    <remap from="image_rect" to="/camera$(arg camera_index_2)/$(arg image_topic)" />
+
+    <param name="camera_index" type="int" value="$(arg camera_index_2)"/>
+    <param name="queue_size" type="int" value="$(arg queue_size)" />
+
+    <param name="cam1_fx" type="double" value="1098.753775" />
+    <param name="cam1_fy" type="double" value="1098.516584" />
+    <param name="cam1_cx" type="double" value="946.799083" />
+    <param name="cam1_cy" type="double" value="514.682774" />
+
+    <rosparam command="load" file="$(find apriltag_ros)/config/object_setting.yaml" />
+    <rosparam command="load" file="$(find apriltag_ros)/config/object.yaml" />
+  </node>
+
+  <!-- Node for Camera 3 -->
+  <node pkg="apriltag_ros" type="gulliview_noetic_stream_cameraX_node"
+    name="Stream_Camera3_detector"
+    clear_params="true" output="screen" launch-prefix="$(arg launch_prefix)">
+    <!-- Remap topics from those used in code to those on the ROS network -->
+    <remap from="image_rect" to="/camera$(arg camera_index_3)/$(arg image_topic)" />
+
+    <param name="camera_index" type="int" value="$(arg camera_index_3)"/>
+    <param name="queue_size" type="int" value="$(arg queue_size)" />
+
+    <param name="cam2_fx" type="double" value="1146.495853" />
+    <param name="cam2_fy" type="double" value="1146.011083" />
+    <param name="cam2_cx" type="double" value="953.976032" />
+    <param name="cam2_cy" type="double" value="571.868765" />
+
+    <rosparam command="load" file="$(find apriltag_ros)/config/object_setting.yaml" />
+    <rosparam command="load" file="$(find apriltag_ros)/config/object.yaml" />
+  </node>
+
+  <!-- Node for Camera 4 -->
+  <node pkg="apriltag_ros" type="gulliview_noetic_stream_cameraX_node"
+    name="Stream_Camera4_detector"
+    clear_params="true" output="screen" launch-prefix="$(arg launch_prefix)">
+    <!-- Remap topics from those used in code to those on the ROS network -->
+    <remap from="image_rect" to="/camera$(arg camera_index_4)/$(arg image_topic)" />
+
+    <param name="camera_index" type="int" value="$(arg camera_index_4)"/>
+    <param name="queue_size" type="int" value="$(arg queue_size)" />
+
+    <param name="cam3_fx" type="double" value="1135.208474" />
+    <param name="cam3_fy" type="double" value="1133.531325" />
+    <param name="cam3_cx" type="double" value="998.932805" />
+    <param name="cam3_cy" type="double" value="530.084624" />
+
+    <rosparam command="load" file="$(find apriltag_ros)/config/object_setting.yaml" />
+    <rosparam command="load" file="$(find apriltag_ros)/config/object.yaml" />
+  </node>
+</launch>
