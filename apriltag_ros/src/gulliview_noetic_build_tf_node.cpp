@@ -1,12 +1,15 @@
+#include "ros/publisher.h"
 #include <apriltag_ros/AprilTagDetectionArray.h>
 #include <apriltag_ros/Tag2CamMsg.h>
 #include <geometry_msgs/PoseStamped.h>
 #include <map>
+#include <nav_msgs/Odometry.h>
 #include <ros/console.h>
 #include <ros/ros.h>
 #include <tf2_geometry_msgs/tf2_geometry_msgs.h>
 #include <tf2_ros/transform_broadcaster.h>
 #include <tf2_ros/transform_listener.h>
+
 // Global tag positions (in meters)
 std::map<int, std::array<double, 3>> global_tag_positions = {
     {8, {0, 0, 0}}, {9, {4.28, 0, 0}}, {6, {0, 2, 0}}, {7, {4.28, 2, 0}},
@@ -18,6 +21,7 @@ private:
   ros::Subscriber tag_detections_sub_;
   ros::Subscriber cam2tag_sub_;
   ros::Publisher global_pose_pub_;
+  ros::Publisher gloabl_odometry_pub_;
   tf2_ros::TransformBroadcaster tf_broadcaster_;
   std::map<int, geometry_msgs::PoseWithCovarianceStamped> camera_to_tag_poses_;
   bool camera_pose_received_ = false;
@@ -34,6 +38,10 @@ public:
     // Publisher for the global pose of the object
     global_pose_pub_ =
         nh.advertise<geometry_msgs::PoseStamped>("global_object_pose", 10);
+
+    gloabl_odometry_pub_ =
+        nh.advertise<nav_msgs::Odometry>("odom_gv", 10);
+
     broadcastGlobalTagTransforms();
   }
 
@@ -100,8 +108,11 @@ public:
       mean_translation /= count;
       tf2::Transform object_global_mean(mean_rotation.normalize(),
                                         mean_translation);
-      ROS_INFO_STREAM(
-          "Global Location(Mean):" << "\t: " << tf2::toMsg(object_global_mean));
+      ROS_INFO_STREAM("Global Location(Mean):"
+                      << "\t: " << tf2::toMsg(object_global_mean));
+
+      publishGlobalOdometry(object_global_mean, object_tag_id);
+
       // TF tree build
       geometry_msgs::TransformStamped object_transform_stamped;
       object_transform_stamped.header.stamp = ros::Time::now();
@@ -121,6 +132,32 @@ public:
 
       tf_broadcaster_.sendTransform(object_transform_stamped);
     }
+  }
+
+  void publishGlobalOdometry(const tf2::Transform &object_global_mean,
+                             int object_tag_id) {
+    nav_msgs::Odometry odometry_msg;
+    odometry_msg.header.stamp = ros::Time::now();
+    odometry_msg.header.frame_id = "global_frame";
+    odometry_msg.child_frame_id = "object_" + std::to_string(object_tag_id);
+
+    odometry_msg.pose.pose.position.x = object_global_mean.getOrigin().x();
+    odometry_msg.pose.pose.position.y = object_global_mean.getOrigin().y();
+    odometry_msg.pose.pose.position.z = object_global_mean.getOrigin().z();
+
+    odometry_msg.pose.pose.orientation =
+        tf2::toMsg(object_global_mean.getRotation());
+
+    // Assuming no velocity information for now
+    odometry_msg.twist.twist.linear.x = 0.0;
+    odometry_msg.twist.twist.linear.y = 0.0;
+    odometry_msg.twist.twist.linear.z = 0.0;
+
+    odometry_msg.twist.twist.angular.x = 0.0;
+    odometry_msg.twist.twist.angular.y = 0.0;
+    odometry_msg.twist.twist.angular.z = 0.0;
+
+    gloabl_odometry_pub_.publish(odometry_msg);
   }
 
   void broadcastGlobalTagTransforms() {

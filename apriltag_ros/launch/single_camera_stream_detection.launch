@@ -4,7 +4,7 @@
 
   <!-- configure camera input -->
   <!-- SET  camera_index for launch-->
-  <arg name="camera_index" default="2" />  
+  <arg name="camera_index" default="2" />
 
   <!--  -->
   <arg name="image_topic" default="image_raw" />
@@ -21,7 +21,7 @@
     <param name="publish_tag_detections_image" type="bool" value="false" />     <!-- default: false -->
 
 
-    <param name="camera_index" type="int" value="$(arg camera_index)"/>
+    <param name="camera_index" type="int" value="$(arg camera_index)" />
     <param name="queue_size" type="int" value="$(arg queue_size)" />
 
 
@@ -30,10 +30,10 @@
     <param name="cam0_cx" type="double" value="961.614618" />
     <param name="cam0_cy" type="double" value="514.490771" />
 
-    <param name="cam1_fx" type="double" value="1098.753775" />
-    <param name="cam1_fy" type="double" value="1098.516584" />
-    <param name="cam1_cx" type="double" value="946.799083" />
-    <param name="cam1_cy" type="double" value="514.682774" />
+    <param name="cam1_fx" type="double" value="1148.845354" />
+    <param name="cam1_fy" type="double" value="1136.968276" />
+    <param name="cam1_cx" type="double" value="987.148727" />
+    <param name="cam1_cy" type="double" value="523.721356" />
 
     <param name="cam2_fx" type="double" value="1146.495853" />
     <param name="cam2_fy" type="double" value="1146.011083" />
@@ -44,6 +44,7 @@
     <param name="cam3_fy" type="double" value="1133.531325" />
     <param name="cam3_cx" type="double" value="998.932805" />
     <param name="cam3_cy" type="double" value="530.084624" />
+
 
     <!-- load parameters (incl. tag family, tags, etc.) -->
     <rosparam command="load" file="$(find apriltag_ros)/config/object_setting.yaml" />

@@ -2,7 +2,7 @@
 
   <arg name="launch_prefix" default="" /> <!--set to value="gdbserver localhost:10000" for remote debugging-->
   <arg name="node_namespace" default="gulliview_noetic_tagfloor_client_node" />
-  <arg name="image_base_path" default="/home/yuchuandong/ros_ws/src/gulliview_noetic/apriltag_ros/config/data/" /> <!-- Where to load image for analysis from -->
+  <arg name="image_base_path" default="/home/gulliview/gulliview_2025_ws/src/gulliview_noetic/apriltag_ros/config/data/" /> <!-- Where to load image for analysis from -->
   
 
 
@@ -21,10 +21,10 @@
     <param name="cam0_cx" type="double" value="961.614618" />
     <param name="cam0_cy" type="double" value="514.490771" />
     
-    <param name="cam1_fx" type="double" value="1098.753775" />
-    <param name="cam1_fy" type="double" value="1098.516584" />
-    <param name="cam1_cx" type="double" value="946.799083" />
-    <param name="cam1_cy" type="double" value="514.682774" />
+    <param name="cam1_fx" type="double" value="1148.845354" />
+    <param name="cam1_fy" type="double" value="1136.968276" />
+    <param name="cam1_cx" type="double" value="987.148727" />
+    <param name="cam1_cy" type="double" value="523.721356" />
 
     <param name="cam2_fx" type="double" value="1146.495853" />
     <param name="cam2_fy" type="double" value="1146.011083" />

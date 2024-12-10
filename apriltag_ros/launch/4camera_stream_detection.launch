@@ -12,9 +12,9 @@
   <arg name="image_topic" default="image_raw" />
   <arg name="queue_size" default="1" />
 
-  <!-- Node for Camera 1 -->
+  <!-- Node for Camera 0 -->
   <node pkg="apriltag_ros" type="gulliview_noetic_stream_cameraX_node"
-    name="Stream_Camera1_detector"
+    name="Stream_Camera0_detector"
     clear_params="true" output="screen" launch-prefix="$(arg launch_prefix)">
     <!-- Remap topics from those used in code to those on the ROS network -->
     <remap from="image_rect" to="/camera$(arg camera_index_1)/$(arg image_topic)" />
@@ -31,28 +31,28 @@
     <rosparam command="load" file="$(find apriltag_ros)/config/object.yaml" />
   </node>
 
-  <!-- Node for Camera 2 -->
+  <!-- Node for Camera 1 -->
   <node pkg="apriltag_ros" type="gulliview_noetic_stream_cameraX_node"
-    name="Stream_Camera2_detector"
+    name="Stream_Camera1_detector"
     clear_params="true" output="screen" launch-prefix="$(arg launch_prefix)">
     <!-- Remap topics from those used in code to those on the ROS network -->
     <remap from="image_rect" to="/camera$(arg camera_index_2)/$(arg image_topic)" />
 
     <param name="camera_index" type="int" value="$(arg camera_index_2)"/>
     <param name="queue_size" type="int" value="$(arg queue_size)" />
-
-    <param name="cam1_fx" type="double" value="1098.753775" />
-    <param name="cam1_fy" type="double" value="1098.516584" />
-    <param name="cam1_cx" type="double" value="946.799083" />
-    <param name="cam1_cy" type="double" value="514.682774" />
+    
+    <param name="cam1_fx" type="double" value="1148.845354" />
+    <param name="cam1_fy" type="double" value="1136.968276" />
+    <param name="cam1_cx" type="double" value="987.148727" />
+    <param name="cam1_cy" type="double" value="523.721356" />
 
     <rosparam command="load" file="$(find apriltag_ros)/config/object_setting.yaml" />
     <rosparam command="load" file="$(find apriltag_ros)/config/object.yaml" />
   </node>
 
-  <!-- Node for Camera 3 -->
+  <!-- Node for Camera 2 -->
   <node pkg="apriltag_ros" type="gulliview_noetic_stream_cameraX_node"
-    name="Stream_Camera3_detector"
+    name="Stream_Camera2_detector"
     clear_params="true" output="screen" launch-prefix="$(arg launch_prefix)">
     <!-- Remap topics from those used in code to those on the ROS network -->
     <remap from="image_rect" to="/camera$(arg camera_index_3)/$(arg image_topic)" />
@@ -69,9 +69,9 @@
     <rosparam command="load" file="$(find apriltag_ros)/config/object.yaml" />
   </node>
 
-  <!-- Node for Camera 4 -->
+  <!-- Node for Camera 3 -->
   <node pkg="apriltag_ros" type="gulliview_noetic_stream_cameraX_node"
-    name="Stream_Camera4_detector"
+    name="Stream_Camera3_detector"
     clear_params="true" output="screen" launch-prefix="$(arg launch_prefix)">
     <!-- Remap topics from those used in code to those on the ROS network -->
     <remap from="image_rect" to="/camera$(arg camera_index_4)/$(arg image_topic)" />
