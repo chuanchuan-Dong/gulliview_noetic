@@ -1,0 +1,26 @@
+<launch>
+    <!-- set to value="gdbserver localhost:10000" for remote debugging -->
+    <arg name="launch_prefix" default="" />
+
+    <!-- configure camera input -->
+    <!-- SET  camera_index for launch-->
+    <arg name="camera_index_0" default="0" />
+    <arg name="camera_index_1" default="2" />
+    <arg name="camera_index_2" default="1" />
+    <arg name="camera_index_3" default="3" />
+    <!-- true camera index is 1 but some setting error with system, so here is 2 -->
+    <arg name="cam2tag_index_0" default="0" />
+    <arg name="cam2tag_index_1" default="1" />
+    <arg name="cam2tag_index_2" default="2" />
+    <arg name="cam2tag_index_3" default="3" />
+
+    <!-- apriltag_ros continuous detection node -->
+    
+    <node pkg="apriltag_ros" type="gulliview_noetic_object_global"
+        name="object_camera1"
+        clear_params="true" output="screen" launch-prefix="$(arg launch_prefix)">
+        <!-- Remap topics from those used in code to those on the ROS network -->
+        <param name="camera_index" type="int" value="$(arg camera_index_1)" />
+        <param name="cam2tag_index" type="int" value="$(arg cam2tag_index_1)" />
+    </node>
+</launch>

@@ -103,6 +103,7 @@ catkin_package(
     ${PROJECT_NAME}_single_image_detector
     ${PROJECT_NAME}_tagfloor_server
     ${PROJECT_NAME}_camera_object_detector_stream
+    ${PROJECT_NAME}_object_pose_estimation
 )
 
 ###########
@@ -133,6 +134,9 @@ target_link_libraries(${gulliview_noetic}_tagfloor_server ${PROJECT_NAME}_common
 add_library(${gulliview_noetic}_camera_object_detector_stream src/camera_object_detector_stream.cpp)
 target_link_libraries(${gulliview_noetic}_camera_object_detector_stream ${PROJECT_NAME}_common ${catkin_LIBRARIES})
 
+# object object pose estimation library
+add_library(${gulliview_noetic}_object_pose_estimation src/object_pose_estimation.cpp)
+target_link_libraries(${gulliview_noetic}_object_pose_estimation ${PROJECT_NAME}_common ${catkin_LIBRARIES})
 
 add_executable(${PROJECT_NAME}_continuous_node src/${PROJECT_NAME}_continuous_node.cpp)
 add_dependencies(${PROJECT_NAME}_continuous_node ${PROJECT_NAME}_generate_messages_cpp)
@@ -163,9 +167,9 @@ target_link_libraries(${gulliview_noetic}_stream_cameraX_node ${gulliview_noetic
 
 
 #
-add_executable(${gulliview_noetic}_build_tf_node src/${gulliview_noetic}_build_tf_node.cpp)
-add_dependencies(${gulliview_noetic}_build_tf_node ${PROJECT_NAME}_generate_messages_cpp)
-target_link_libraries(${gulliview_noetic}_build_tf_node ${PROJECT_NAME}_common ${catkin_LIBRARIES})
+add_executable(${gulliview_noetic}_object_global src/${gulliview_noetic}_object_global.cpp)
+add_dependencies(${gulliview_noetic}_object_global ${PROJECT_NAME}_generate_messages_cpp)
+target_link_libraries(${gulliview_noetic}_object_global ${gulliview_noetic}_object_pose_estimation ${catkin_LIBRARIES})
 
 
 #############
