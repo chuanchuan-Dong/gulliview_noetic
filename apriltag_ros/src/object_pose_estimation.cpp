@@ -1,11 +1,11 @@
 #include "object_pose_estimation.h"
 #include "ros/node_handle.h"
+#include <apriltag_ros/ObjGlobalPose.h>
 #include <string>
 
 ObjectPoseEstimator::ObjectPoseEstimator(ros::NodeHandle &nh,
                                          ros::NodeHandle &pnh) {
 
-  int camera_index, cam2tag_index;
   pnh.param<int>("camera_index", camera_index, 999);
   pnh.param<int>("cam2tag_index", cam2tag_index, 999);
 
@@ -17,8 +17,10 @@ ObjectPoseEstimator::ObjectPoseEstimator(ros::NodeHandle &nh,
                               &ObjectPoseEstimator::cam2TagCallback, this);
 
   // Publisher for the global pose of the object
-  global_pose_pub_ = nh.advertise<geometry_msgs::PoseStamped>(
-      "/camera" + std::to_string(camera_index) + "/global_object_pose", 10);
+  global_pose_pub_ =
+      nh.advertise<apriltag_ros::ObjGlobalPose>( // the msg type contain id
+                                                 // number + geometry pose msg
+          "/camera" + std::to_string(camera_index) + "/global_object_pose", 10);
 
   gloabl_odometry_pub_ = nh.advertise<nav_msgs::Odometry>(
       "/camera" + std::to_string(camera_index) + "/odom_gv", 10);
@@ -81,62 +83,86 @@ void ObjectPoseEstimator::tagDetectionsCallback(
       mean_translation += tf_object_global.getOrigin();
       mean_rotation += tf_object_global.getRotation();
 
-      ROS_INFO_STREAM("Global Location Based on floor tag id:"
-                      << floor_tag_id
-                      << "\t: " << tf2::toMsg(tf_object_global));
+      // ROS_INFO_STREAM("<ObjectPoseEstimator>:Global Location Based on floor
+      // tag id:"
+      //                 << floor_tag_id
+      //                 << "\t: " << tf2::toMsg(tf_object_global));
     }
+
     mean_translation /= count;
     tf2::Transform object_global_mean(mean_rotation.normalize(),
                                       mean_translation);
-    ROS_INFO_STREAM("Global Location(Mean):"
-                    << "\t: " << tf2::toMsg(object_global_mean));
+    ROS_INFO_STREAM("<ObjectPoseEstimator>: From Camera "
+                    << camera_index << "\tGlobal Location(Mean):" << "\n: "
+                    << tf2::toMsg(object_global_mean));
 
-    publishGlobalOdometry(object_global_mean, object_tag_id);
-
-    geometry_msgs::TransformStamped object_transform_stamped;
-    object_transform_stamped.header.stamp = ros::Time::now();
-    object_transform_stamped.header.frame_id = "global_frame";
-    object_transform_stamped.child_frame_id =
-        "object_" + std::to_string(object_tag_id);
-
-    object_transform_stamped.transform.translation.x =
+    // Publish global pose (to be used by the guard node)
+    geometry_msgs::PoseStamped global_pose_geometry_msg;
+    apriltag_ros::ObjGlobalPose global_pose_msg;
+    global_pose_msg.ObjID = "object_" + std::to_string(object_tag_id);
+    global_pose_geometry_msg.header.stamp = ros::Time::now();
+    global_pose_geometry_msg.header.frame_id =
+        "camera" + std::to_string(camera_index);
+    global_pose_geometry_msg.pose.position.x =
         object_global_mean.getOrigin().x();
-    object_transform_stamped.transform.translation.y =
+    global_pose_geometry_msg.pose.position.y =
         object_global_mean.getOrigin().y();
-    object_transform_stamped.transform.translation.z =
+    global_pose_geometry_msg.pose.position.z =
         object_global_mean.getOrigin().z();
-
-    object_transform_stamped.transform.rotation =
+    global_pose_geometry_msg.pose.orientation =
         tf2::toMsg(object_global_mean.getRotation());
+    global_pose_msg.pose = global_pose_geometry_msg;
+    global_pose_pub_.publish(global_pose_msg);
 
-    tf_broadcaster_.sendTransform(object_transform_stamped);
+    // publishGlobalOdometry(object_global_mean, object_tag_id);
+    //
+    //
+    // TF Tree will be construct at guard node.
+
+    // geometry_msgs::TransformStamped object_transform_stamped;
+    // object_transform_stamped.header.stamp = ros::Time::now();
+    // object_transform_stamped.header.frame_id = "global_frame";
+    // object_transform_stamped.child_frame_id =
+    //     "object_" + std::to_string(object_tag_id);
+
+    // object_transform_stamped.transform.translation.x =
+    //     object_global_mean.getOrigin().x();
+    // object_transform_stamped.transform.translation.y =
+    //     object_global_mean.getOrigin().y();
+    // object_transform_stamped.transform.translation.z =
+    //     object_global_mean.getOrigin().z();
+
+    // object_transform_stamped.transform.rotation =
+    //     tf2::toMsg(object_global_mean.getRotation());
+
+    // tf_broadcaster_.sendTransform(object_transform_stamped);
   }
 }
 
-void ObjectPoseEstimator::publishGlobalOdometry(
-    const tf2::Transform &object_global_mean, int object_tag_id) {
-  nav_msgs::Odometry odometry_msg;
-  odometry_msg.header.stamp = ros::Time::now();
-  odometry_msg.header.frame_id = "global_frame";
-  odometry_msg.child_frame_id = "object_" + std::to_string(object_tag_id);
+// void ObjectPoseEstimator::publishGlobalOdometry(
+//     const tf2::Transform &object_global_mean, int object_tag_id) {
+//   nav_msgs::Odometry odometry_msg;
+//   odometry_msg.header.stamp = ros::Time::now();
+//   odometry_msg.header.frame_id = "global_frame";
+//   odometry_msg.child_frame_id = "object_" + std::to_string(object_tag_id);
 
-  odometry_msg.pose.pose.position.x = object_global_mean.getOrigin().x();
-  odometry_msg.pose.pose.position.y = object_global_mean.getOrigin().y();
-  odometry_msg.pose.pose.position.z = object_global_mean.getOrigin().z();
+//   odometry_msg.pose.pose.position.x = object_global_mean.getOrigin().x();
+//   odometry_msg.pose.pose.position.y = object_global_mean.getOrigin().y();
+//   odometry_msg.pose.pose.position.z = object_global_mean.getOrigin().z();
 
-  odometry_msg.pose.pose.orientation =
-      tf2::toMsg(object_global_mean.getRotation());
+//   odometry_msg.pose.pose.orientation =
+//       tf2::toMsg(object_global_mean.getRotation());
 
-  odometry_msg.twist.twist.linear.x = 0.0;
-  odometry_msg.twist.twist.linear.y = 0.0;
-  odometry_msg.twist.twist.linear.z = 0.0;
+//   odometry_msg.twist.twist.linear.x = 0.0;
+//   odometry_msg.twist.twist.linear.y = 0.0;
+//   odometry_msg.twist.twist.linear.z = 0.0;
 
-  odometry_msg.twist.twist.angular.x = 0.0;
-  odometry_msg.twist.twist.angular.y = 0.0;
-  odometry_msg.twist.twist.angular.z = 0.0;
+//   odometry_msg.twist.twist.angular.x = 0.0;
+//   odometry_msg.twist.twist.angular.y = 0.0;
+//   odometry_msg.twist.twist.angular.z = 0.0;
 
-  gloabl_odometry_pub_.publish(odometry_msg);
-}
+//   gloabl_odometry_pub_.publish(odometry_msg);
+// }
 
 // void ObjectPoseEstimator::broadcastGlobalTagTransforms() {
 //   for (const auto &tag_pos : global_tag_positions) {

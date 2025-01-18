@@ -55,6 +55,7 @@ add_message_files(
   AprilTagDetection.msg
   AprilTagDetectionArray.msg
   Tag2CamMsg.msg
+  ObjGlobalPose.msg
 )
 
 add_service_files(
@@ -170,6 +171,12 @@ target_link_libraries(${gulliview_noetic}_stream_cameraX_node ${gulliview_noetic
 add_executable(${gulliview_noetic}_object_global src/${gulliview_noetic}_object_global.cpp)
 add_dependencies(${gulliview_noetic}_object_global ${PROJECT_NAME}_generate_messages_cpp)
 target_link_libraries(${gulliview_noetic}_object_global ${gulliview_noetic}_object_pose_estimation ${catkin_LIBRARIES})
+
+# guard node
+
+add_executable(${gulliview_noetic}_object_pose_guard src/${gulliview_noetic}_object_pose_guard.cpp)
+add_dependencies(${gulliview_noetic}_object_pose_guard ${PROJECT_NAME}_generate_messages_cpp)
+target_link_libraries(${gulliview_noetic}_object_pose_guard ${catkin_LIBRARIES})
 
 
 #############

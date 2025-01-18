@@ -1,13 +1,13 @@
 <launch>
   <!-- Publish static transforms -->
   <node pkg="tf2_ros" type="static_transform_publisher" name="static_tf_tag_0" args="0.0 0.0 0.0 0.0 0.0 0.0 global_frame tag_8"/>
-  <node pkg="tf2_ros" type="static_transform_publisher" name="static_tf_tag_1" args="4.25 0.0 0.0 0.0 0.0 0.0 global_frame tag_9"/>
+  <node pkg="tf2_ros" type="static_transform_publisher" name="static_tf_tag_1" args="4.265 0.0 0.0 0.0 0.0 0.0 global_frame tag_9"/>
   <node pkg="tf2_ros" type="static_transform_publisher" name="static_tf_tag_2" args="0.0 2.0 0.0 0.0 0.0 0.0 global_frame tag_6"/>
-  <node pkg="tf2_ros" type="static_transform_publisher" name="static_tf_tag_3" args="4.25 2.0 0.0 0.0 0.0 0.0 global_frame tag_7"/>
+  <node pkg="tf2_ros" type="static_transform_publisher" name="static_tf_tag_3" args="4.268 2.0 0.0 0.0 0.0 0.0 global_frame tag_7"/>
   <node pkg="tf2_ros" type="static_transform_publisher" name="static_tf_tag_4" args="0.0 4.0 0.0 0.0 0.0 0.0 global_frame tag_4"/>
-  <node pkg="tf2_ros" type="static_transform_publisher" name="static_tf_tag_5" args="4.28 4.0 0.0 0.0 0.0 0.0 global_frame tag_5"/>
+  <node pkg="tf2_ros" type="static_transform_publisher" name="static_tf_tag_5" args="4.268 4.0 0.0 0.0 0.0 0.0 global_frame tag_5"/>
   <node pkg="tf2_ros" type="static_transform_publisher" name="static_tf_tag_6" args="0.0 6.0 0.0 0.0 0.0 0.0 global_frame tag_2"/>
-  <node pkg="tf2_ros" type="static_transform_publisher" name="static_tf_tag_7" args="4.28 6.0 0.0 0.0 0.0 0.0 global_frame tag_3"/>
+  <node pkg="tf2_ros" type="static_transform_publisher" name="static_tf_tag_7" args="4.295 6.0 0.0 0.0 0.0 0.0 global_frame tag_3"/>
   <node pkg="tf2_ros" type="static_transform_publisher" name="static_tf_tag_8" args="0.0 8.0 0.0 0.0 0.0 0.0 global_frame tag_0"/>
-  <node pkg="tf2_ros" type="static_transform_publisher" name="static_tf_tag_9" args="4.28 8.0 0.0 0.0 0.0 0.0 global_frame tag_1"/>
+  <node pkg="tf2_ros" type="static_transform_publisher" name="static_tf_tag_9" args="4.3 8.0 0.0 0.0 0.0 0.0 global_frame tag_1"/>
 </launch>

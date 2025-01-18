@@ -2,17 +2,17 @@
 #define OBJECT_POSE_ESTIMATOR_H
 
 #include "ros/node_handle.h"
-#include <ros/ros.h>
+#include <apriltag_ros/AprilTagDetectionArray.h>
+#include <apriltag_ros/Tag2CamMsg.h>
+#include <array>
 #include <geometry_msgs/PoseStamped.h>
 #include <geometry_msgs/PoseWithCovarianceStamped.h>
 #include <geometry_msgs/TransformStamped.h>
-#include <nav_msgs/Odometry.h>
-#include <tf2_ros/transform_broadcaster.h>
-#include <tf2_geometry_msgs/tf2_geometry_msgs.h>
-#include <apriltag_ros/AprilTagDetectionArray.h>
-#include <apriltag_ros/Tag2CamMsg.h>
 #include <map>
-#include <array>
+#include <nav_msgs/Odometry.h>
+#include <ros/ros.h>
+#include <tf2_geometry_msgs/tf2_geometry_msgs.h>
+#include <tf2_ros/transform_broadcaster.h>
 
 class ObjectPoseEstimator {
 private:
@@ -25,12 +25,12 @@ private:
   // std::map<int, std::array<double, 3>> global_tag_positions;
 
   std::map<int, std::array<double, 3>> global_tag_positions = {
-    {8, {0, 0, 0}}, {9, {4.28, 0, 0}}, {6, {0, 2, 0}}, {7, {4.28, 2, 0}},
-    {4, {0, 4, 0}}, {5, {4.28, 4, 0}}, {2, {0, 6, 0}}, {3, {4.28, 6, 0}},
-    {0, {0, 8, 0}}, {1, {4.28, 8, 0}}};
+      {8, {0, 0, 0}}, {9, {4.265, 0, 0}}, {6, {0, 2, 0}}, {7, {4.268, 2, 0}},
+      {4, {0, 4, 0}}, {5, {4.268, 4, 0}}, {2, {0, 6, 0}}, {3, {4.295, 6, 0}},
+      {0, {0, 8, 0}}, {1, {4.3, 8, 0}}};
 
   bool camera_pose_received_ = false;
-
+  int camera_index, cam2tag_index;
   void tagDetectionsCallback(
       const apriltag_ros::AprilTagDetectionArray::ConstPtr &msg);
   void cam2TagCallback(const apriltag_ros::Tag2CamMsg::ConstPtr &msg);
