@@ -12,10 +12,15 @@ This project is based on [apritag_ros](https://github.com/AprilRobotics/apriltag
 - [x] Global Coordination System  
 - [x] Vehicle Orientation  
 - [x] Self-adjusted Vehicle Height Influence  
-- [x] Prepared for Navigation  
+- [x] Prepared for Navigation(Nav_msgs::odometry msg type avaibale at guard node)  
 
 # DEMO
+### Accrossing 4 zones
 ![Project Demo](https://github.com/chuanchuan-Dong/gulliview_noetic/blob/main/apriltag_ros/docs/demo_gullview-noetic.gif)  
+
+### Navigation(collaborate with vehicle)
+![Project Demo](https://github.com/chuanchuan-Dong/gulliview_noetic/blob/main/apriltag_ros/docs/demo2_nav.gif)  
+
 ### Setup
 
 Manually store testbed image attached with floortag when make a change. e.g. /gulliview_noetic/apritag_ros/config/data/camx.jpg
