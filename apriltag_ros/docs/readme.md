@@ -8,7 +8,8 @@ Note: This system is still under development and has not been extensively tested
 
 This project is based on [apritag_ros](https://github.com/AprilRobotics/apriltag_ros), which provide powerful API to make apritag detection.
 
-
+# DEMO
+![Project Demo](https://github.com/chuanchuan-Dong/gulliview_noetic/blob/main/apriltag_ros/docs/demo_gullview-noetic.gif)  
 ### Setup
 
 Manually store testbed image attached with floortag when make a change. e.g. /gulliview_noetic/apritag_ros/config/data/camx.jpg
