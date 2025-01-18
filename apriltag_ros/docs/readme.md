@@ -8,11 +8,14 @@ Note: This system is still under development and has not been extensively tested
 
 This project is based on [apritag_ros](https://github.com/AprilRobotics/apriltag_ros), which provide powerful API to make apritag detection.
 
+![System Diagram](https://github.com/chuanchuan-Dong/gulliview_noetic/blob/main/apriltag_ros/docs/system_overview.png)  
 ## Gulliview_Noetic
-- [x] Global Coordination System  
-- [x] Vehicle Orientation  
+- [x] Global Coordination System(cemtimeter error)
+- [x] Vehicle Orientation (3-axis)
 - [x] Self-adjusted Vehicle Height Influence  
-- [x] Prepared for Navigation(Nav_msgs::odometry msg type avaibale at guard node)  
+- [x] Prepared for Navigation(Nav_msgs::odometry msg type avaibale at guard node)
+- [ ] Bundle tags
+- [ ] Nvidia support
 
 # DEMO
 ### Accrossing 4 zones
