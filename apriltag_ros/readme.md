@@ -36,8 +36,8 @@ Manually store testbed image attached with floortag when make a change. e.g. /gu
 Also change the path on global_client launch file.
 
 
-### RUN!!!!
-
+### Launch🚀!!!!
+When camera node is already:
 1. roslaunch apriltag_ros global_server.launch
 2. roslaunch apriltag_ros global_client.launch
 3. roslaunch apriltag_ros 4camera_stream_detection.launch
