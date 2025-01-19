@@ -22,6 +22,9 @@ This project is based on [apritag_ros](https://github.com/AprilRobotics/apriltag
 ### Accrossing 4 zones
 ![Project Demo](https://github.com/chuanchuan-Dong/gulliview_noetic/blob/main/apriltag_ros/docs/demo_gullview-noetic.gif)  
 
+### Accrossing 4 zones, much more complicated
+![Project Demo](https://github.com/chuanchuan-Dong/gulliview_noetic/blob/main/apriltag_ros/docs/demo3.gif)  
+
 ### Navigation(collaborate with vehicle)
 ![Project Demo](https://github.com/chuanchuan-Dong/gulliview_noetic/blob/main/apriltag_ros/docs/demo2_nav.gif)  
 
