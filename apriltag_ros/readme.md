@@ -14,6 +14,7 @@ This project is based on [apritag_ros](https://github.com/AprilRobotics/apriltag
 - [x] Vehicle Orientation (3-axis)
 - [x] Self-adjusted Vehicle Height Influence  
 - [x] Prepared for Navigation(Nav_msgs::odometry msg type avaibale at guard node)
+- [ ] Lazy detection controlled by guard node
 - [ ] Nodelet
 - [ ] Bundle tags
 - [ ] Nvidia support
